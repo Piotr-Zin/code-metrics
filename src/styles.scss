@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+
+@import '../src/app/styles/variables';
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+}
+
+button.btn {
+  &.prevent {
+    &:hover {
+      background-color: $warning;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+<h2>Project details</h2>
+<div *ngIf="project" class="card shadow-sm">
+  <div class="card-header">
+    {{ project.name }}
+    <div class="float-right"><button class="btn btn-primary" (click)="analyse()">Analyse</button></div>
+  </div>
+  <div class="card-body">
+    <div *ngIf="analysed">
+      <ul class="list-group">
+        <li class="list-group-item active">Metrics:</li>
+        <li class="list-group-item" *ngFor="let metric of (projectDetails.projectMetrics | keyvalue)">
+          {{ metric.key }} <span class="badge badge-pill badge-dark float-right">{{ metric.value }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

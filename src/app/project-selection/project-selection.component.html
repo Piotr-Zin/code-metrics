@@ -1,0 +1,28 @@
+<div class="container-fluid card shadow-sm">
+  <div class="m-4">
+    <form>
+      <div class="form-group">
+        <label for="selectedProject">Available projects: </label>
+        <select [(ngModel)]="selectedProject" name="selectedProject" class="form-control">
+          <option *ngFor="let component of components" [ngValue]="component">
+            {{ component.name }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <ng-template #notSelectedTooltip>Select a project first</ng-template>
+        <ng-template #selectedTooltip>{{ selectedProject.name }}</ng-template>
+        <button
+          placement="top"
+          [ngbTooltip]="selectedProject ? selectedTooltip : notSelectedTooltip"
+          type="button"
+          class="btn btn-outline-primary"
+          [ngClass]="{ prevent: !selectedProject }"
+          (click)="selectProject($event)"
+        >
+          Select
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
