@@ -32,16 +32,39 @@ export class ProjectDetailsComponent implements OnInit {
   ngOnInit() {
     console.log('Project details init!');
 
-    this.currentProjectService.getCurrentProject().subscribe((currentProject: SqComponent) => {
-      if (!currentProject) {
-        throw new Error('Current project is not defined!');
-      }
-      this.logger.info(`Project details getCurrentProject(): ${currentProject.name}`);
-      this.project = currentProject;
-    });
+    // this.currentProjectService.getCurrentProject().subscribe((currentProject: SqComponent) => {
+    //   if (!currentProject) {
+    //     throw new Error('Current project is not defined!');
+    //   }
+    //   this.logger.info(`Project details getCurrentProject(): ${currentProject.name}`);
+    //   this.project = currentProject;
+
+    //   this.codeMetricsService.getLastAnalysisDate().subscribe(analyses => {
+    //     this.logger.info(`Analyses: ${JSON.stringify(analyses.analyses.reverse().slice(-1)[0])}`);
+    //     this.projectDetails.lastAnalysisDate = analyses.analyses.reverse().slice(-1)[0].date;
+    //   });
+    // });
+
+    this.currentProjectService
+      .getCurrentProject()
+      .pipe(
+        switchMap((currentProject: SqComponent) => {
+          if (!currentProject) {
+            throw new Error('Current project is not defined!');
+          }
+          this.logger.info(`Project details getCurrentProject(): ${currentProject.name}`);
+          this.project = currentProject;
+
+          return this.codeMetricsService.getLastAnalysisDate(this.project.project);
+        })
+      )
+      .subscribe((analyses: any[]) => {
+        this.logger.info(`Analyses: ${JSON.stringify(analyses.analyses.reverse().slice(-1)[0].date)}`);
+        this.projectDetails.lastAnalysisDate = analyses.analyses.reverse().slice(-1)[0].date;
+      });
   }
 
-  analyse() {
+  showMetrics() {
     this.codeMetricsService.getProjectMetrics(this.project.project).subscribe(
       (p: SqComponentResponse) => {
         this.logger.info(`Successfully fetched project metrics: ${JSON.stringify(p)}`);

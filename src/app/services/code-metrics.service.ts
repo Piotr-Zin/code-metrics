@@ -26,13 +26,13 @@ export class CodeMetricsService {
     return this.http.get(`/components/search?qualifiers=TRK`);
   }
 
-  getLastAnalysisDate(): Observable<any> {
-    return this.currentProjectService.getCurrentProject().pipe(
-      mergeMap((proj, _) => {
-        this.logger.info(`CodeMetricsService:getLastAnalysisDate() => Current project: ${JSON.stringify(proj)}`);
-        return this.http.get<any>(`/project_analyses/search?project=${proj.project}&ps=3`);
-      })
-    );
+  getLastAnalysisDate(currentProjectKey: string): Observable<any> {
+    // return this.currentProjectService.getCurrentProject().pipe(
+    //   mergeMap((proj, _) => {
+    //     this.logger.info(`CodeMetricsService:getLastAnalysisDate() => Current project: ${JSON.stringify(proj)}`);
+    return this.http.get<any>(`/project_analyses/search?project=${currentProjectKey}&ps=3`);
+    // })
+    // );
   }
 
   // getProjectMetrics(): Observable<SqComponentResponse> {

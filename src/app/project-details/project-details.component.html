@@ -1,8 +1,8 @@
 <h2>Project details</h2>
 <div *ngIf="project" class="card shadow-sm">
   <div class="card-header">
-    {{ project.name }}
-    <div class="float-right"><button class="btn btn-primary" (click)="analyse()">Analyse</button></div>
+    {{ project.name }} (Last analysis: <span style="text-decoration: underline">{{ projectDetails.lastAnalysisDate | date: 'yyyy-MM-dd hh:mm a' }}</span>)
+    <div class="float-right"><button class="btn btn-primary" (click)="showMetrics()">Get metrics</button></div>
   </div>
   <div class="card-body">
     <div *ngIf="analysed">
